@@ -1,4 +1,6 @@
 public class StudentLinkedList {
+    private Node head;
+
     class Node {
         Student student;
         Node next;
@@ -7,10 +9,8 @@ public class StudentLinkedList {
             this.next = null;
         }
     }
-    
-    private Node head;
 
-    public boolean addStudent(Student student) {
+    public void addStudent(Student student) {
         Node newNode = new Node(student);
         if (head == null) {
             head = newNode;
@@ -21,49 +21,22 @@ public class StudentLinkedList {
             }
             temp.next = newNode;
         }
-        return true;
     }
 
     public void displayStudents() {
         if (head == null) {
-            System.out.println("No student records found.");
+            System.out.println("No student records found in the system.");
             return;
         }
         Node temp = head;
+        System.out.println("\n--- Student Records (Linked List) ---");
         while (temp != null) {
-            System.out.println("ID: " + temp.student.getStudentId() + ", Name: " + temp.student.getName());
+            System.out.println("Student ID: " + temp.student.getId() + 
+                               " | Name: " + temp.student.getName() + 
+                               " | Programme: " + temp.student.getProgramme() + 
+                               " | Marks: " + temp.student.getMarks());
             temp = temp.next;
         }
-    }
-
-    public boolean deleteStudent(int id) {
-        if (head == null) return false;
-        if (head.student.getStudentId() == id) {
-            head = head.next;
-            return true;
-        }
-        Node temp = head;
-        while (temp.next != null && temp.next.student.getStudentId() != id) {
-            temp = temp.next;
-        }
-        if (temp.next != null) {
-            temp.next = temp.next.next;
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateStudent(int id, String newName, String newProg, double newMarks) {
-        Node temp = head;
-        while (temp != null) {
-            if (temp.student.getStudentId() == id) {
-                temp.student.setName(newName);
-                temp.student.setProgramme(newProg);
-                temp.student.setMarks(newMarks);
-                return true;
-            }
-            temp = temp.next;
-        }
-        return false;
+        System.out.println("-------------------------------------");
     }
 }
