@@ -1,49 +1,45 @@
 import java.util.*;
 
 public class CampusGraph {
-    private Map<String, List<String>> adjList;
+    private Map<String, List<String>> adjVertices;
 
     public CampusGraph() {
-        adjList = new HashMap<>();
+        this.adjVertices = new HashMap<>();
     }
 
-    // Add building/vertex
-    public void addBuilding(String building) {
-        adjList.putIfAbsent(building, new ArrayList<>());
+    public void addLocation(String label) {
+        adjVertices.putIfAbsent(label, new ArrayList<>());
     }
 
-    // Add path/edge between buildings
-    public void addPath(String building1, String building2) {
-        addBuilding(building1);
-        addBuilding(building2);
-        adjList.get(building1).add(building2);
-        adjList.get(building2).add(building1); // Undirected graph
+    public void addConnection(String label1, String label2) {
+        adjVertices.get(label1).add(label2);
+        adjVertices.get(label2).add(label1); // Undirected graph
     }
 
-    // BFS traversal to find route
-    public void displayCampusRoute(String start) {
-        Set<String> visited = new HashSet<>();
+    public void traverseBFS(String root) {
+        if (!adjVertices.containsKey(root)) {
+            System.out.println("Location not found on campus.");
+            return;
+        }
+        
+        Set<String> visited = new LinkedHashSet<>();
         Queue<String> queue = new LinkedList<>();
-        queue.add(start);
-        visited.add(start);
-
-        System.out.println("Campus Route starting from " + start + ":");
+        
+        queue.add(root);
+        visited.add(root);
+        
+        System.out.print("Campus Route: ");
         while (!queue.isEmpty()) {
-            String current = queue.poll();
-            System.out.print(current + " -> ");
-            for (String neighbor : adjList.get(current)) {
-                if (!visited.contains(neighbor)) {
-                    visited.add(neighbor);
-                    queue.add(neighbor);
+            String vertex = queue.poll();
+            System.out.print(vertex + " -> ");
+            
+            for (String v : adjVertices.get(vertex)) {
+                if (!visited.contains(v)) {
+                    visited.add(v);
+                    queue.add(v);
                 }
             }
         }
-        System.out.println("END");
-    }
-
-    public void printGraph() {
-        for (String building : adjList.keySet()) {
-            System.out.println(building + " connects to: " + adjList.get(building));
-        }
+        System.out.println("End");
     }
 }
