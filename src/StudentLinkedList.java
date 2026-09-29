@@ -31,7 +31,7 @@ public class StudentLinkedList {
         Node temp = head;
         System.out.println("\n--- Student Records (Linked List) ---");
         while (temp != null) {
-            System.out.println("Student ID: " + temp.student.getId() + 
+            System.out.println("Student ID: " + temp.student.getstudentId() + 
                                " | Name: " + temp.student.getName() + 
                                " | Programme: " + temp.student.getProgramme() + 
                                " | Marks: " + temp.student.getMarks());
